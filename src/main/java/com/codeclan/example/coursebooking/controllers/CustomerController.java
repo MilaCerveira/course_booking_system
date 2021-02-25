@@ -25,15 +25,15 @@ public class CustomerController {
             @RequestParam(required = false, name = "age") Integer age
     ) { // if we have the course name then do the course query
         if (name != null) {
-            return new ResponseEntity(customerRepository.findByBookingsCourseName(name), HttpStatus.OK);
+            return new ResponseEntity(customerRepository.findByBookingsCourseNameIgnoreCase(name), HttpStatus.OK);
         }
         // if we have the course town & the course name then do this
         if (town != null && courseName != null) {
-            List<Customer> foundCustomer = customerRepository.findByTownAndBookingsCourseName(town, courseName);
+            List<Customer> foundCustomer = customerRepository.findByTownIgnoreCaseAndBookingsCourseNameIgnoreCase(town, courseName);
             return new ResponseEntity(foundCustomer, HttpStatus.OK);
         }
         if (age > 20 && town != null) {
-            List<Customer> foundCustomer = customerRepository.findByAgeAndTownAndBookingsCourseName(age, town, courseName);
+            List<Customer> foundCustomer = customerRepository.findByAgeAndTownAndBookingsCourseNameIgnoreCase(age, town, courseName);
             return new ResponseEntity(foundCustomer, HttpStatus.OK);
         }
         return new ResponseEntity(customerRepository.findAll(), HttpStatus.OK);
